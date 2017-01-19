@@ -71,6 +71,9 @@ function graphThis(type){
 
           }
       }
+
+  //    multiTooltipTemplate: "<%= labelArr %> - <%= dataArr %>";
+
   }
 
   });

@@ -35,7 +35,8 @@ function DOMtoString(document_root) {
     var elements = $(iframe2Document);
 
     var header = $('#streamDetailHeaderRight', elements);
-    var title = header.find('.context');
+    var title = header.find('.context').text();
+    //console.log(title.text());
 
     var gradesWrapper = $('#grades_wrapper', elements);
 
@@ -67,7 +68,7 @@ function DOMtoString(document_root) {
       console.log("Total not present.");
     }
 
-    var subject = "Subject";
+    var subject = title;
     var labels = [];
     var percentages = [];
     var index = 0;
@@ -100,7 +101,8 @@ function DOMtoString(document_root) {
         labels[index] = gradeTitle;
 
 
-        var date = $(this).find('.lastActivityDate');
+        var date = $(this).find('.lastActivityDate').text();
+        var dateStr = date.substr(0, 11);
         var grade = $(this).find('.grade[tabindex=0]');
         var outOf = $(this).find('.pointsPossible.clearfloats'); //This has a leading '/'
 
@@ -121,8 +123,8 @@ function DOMtoString(document_root) {
           percentages.push(percent);
         }
 
-        console.log("Graded on: " + date.text());
-        dates[index] = date.text();
+        console.log("Graded on: " + dateStr);
+        dates[index] = dateStr;
         index++;
       }
       else {

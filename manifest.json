@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Get pages source",
+  "name": "BlackboardGradeGrapher",
   "version": "1.0",
 
   "description": "Get a graph of your results in the 'My Grades' secton.",

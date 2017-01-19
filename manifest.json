@@ -12,15 +12,10 @@
   },
 
 
-
-
  "web_accessible_resources": [
       "style.css"
   ],
 
-"background":{
-    "scripts":["plots.js"]
-},
 
 "content_scripts": [
    {

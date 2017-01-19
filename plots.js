@@ -4,7 +4,8 @@ var thisSubject = null;
 var canvasCreated = false;
 var CHART;
 var lineChart;
-var chartType = 'line';
+var chartType = null;
+var thisChartType;
 var dataVals, dataArr,labelVals, labelArr ,subjVals, subject;
 Chart.defaults.scale.ticks.beginAtZero = true;
 Chart.defaults.scale.ticks.max = 100;
@@ -12,7 +13,6 @@ Chart.defaults.global.animation.duration = 2000;
 
 
 function graphThis(type){
-
 
   lineChart = new Chart (CHART, {
     type: type,
@@ -98,12 +98,15 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
         }
 
       if(message.type== "chartType"){
-        chartType = message;
+        thisChartType = message;
+        console.log(message);
       }
 
 
 
-if(thisData != null & thisLabels != null & thisSubject !=null & chartType != null){
+
+
+if(thisData != null & thisLabels != null & thisSubject !=null & thisChartType !=null){
 
 console.log(thisData);
 
@@ -133,6 +136,11 @@ console.log(labelArr);
  subjVals = Object.values(thisSubject);
  subject = subjVals[0];
 
+var chartTypeVals = Object.values(thisChartType);
+chartType = chartTypeVals[0];
+
+
+
 
  graphThis(chartType);
 
@@ -140,6 +148,7 @@ console.log(labelArr);
 thisData = null;
 thisLabels= null;
 thisSubject = null;
+thisChartType = null;
 console.log("graphed!");
 }
 

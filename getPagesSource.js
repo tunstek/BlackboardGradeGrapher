@@ -139,7 +139,13 @@ function DOMtoString(document_root) {
 
     console.log(iframe2Document);
 
+
     var chartType = 'line';
+    console.log(percentages.length);
+    if(percentages.length == 1){
+      chartType = 'bar';
+    }
+    console.log(chartType);
     chrome.runtime.sendMessage({content: percentages, type: "data"});
     chrome.runtime.sendMessage({content: dates, type: "label"});
     chrome.runtime.sendMessage({content: subject, type: "subject"});

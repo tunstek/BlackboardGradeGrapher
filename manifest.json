@@ -1,18 +1,17 @@
 {
   "manifest_version": 2,
 
-  "name": "BlackboardGradeGrapher",
+  "name": "TCD Blackboard Grade Grapher",
   "version": "1.0",
 
-  "description": "Get a graph of your results in the 'My Grades' secton.",
+  "description": "Get a graph of your results in the 'My Grades' secton. (TCD ONLY)",
 
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
 
-  "content_security_policy": "script-src 'self'  https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js; object-src 'self'"
-,
+
 
 
  "web_accessible_resources": [

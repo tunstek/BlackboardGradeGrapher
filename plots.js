@@ -207,6 +207,8 @@ $('#lineChartIt').click(function do_something(){
 });
 
 $('#change_Labels').click(function change_Labels(){
+
+
   console.log(toggleLabel);
   if(toggleLabel ==0 ){
     lineChart.config.data.labels = labsVal;
@@ -230,4 +232,5 @@ $('#change_Labels').click(function change_Labels(){
   // }
 
   lineChart.update()
+
 });

@@ -61,8 +61,12 @@ function DOMtoString(document_root) {
       var ovGradeFl = parseFloat(ovGradeStr);
       var ovOutOfFl = parseFloat(ovOutOfStr);
       var ovPercent = (ovGradeFl/ovOutOfFl) * 100;
+      var ovPercentR =  Math.round(ovPercent * 100) / 100; //Limit to 2 decimal places
 
-      console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + ovPercent + "%");
+      console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + ovPercentR + "%");
+
+      //Add the total percentage to the title
+      title = title + " Overall:" + ovPercentR + "%";
     }
     else {
       console.log("Total not present.");
@@ -98,7 +102,15 @@ function DOMtoString(document_root) {
       if(status == "Graded") {
 
         //Only take results that have been graded
-        labels[index] = gradeTitle;
+
+        //Truncate a long assignment title
+        var label = gradeTitle.substr(0, 11);
+        if(label == gradeTitle) {
+          labels[index] = label;
+        }
+        else {
+          labels[index] = label + "..";
+        }
 
 
         var date = $(this).find('.lastActivityDate').text();
@@ -120,6 +132,10 @@ function DOMtoString(document_root) {
         }
         else {
           console.log(grade + "/" + outOf + " = " + percent + "%");
+          //Check if % is > 100  --> Assignment may be worth extra marks
+          if(percent > 100) {
+            percent = 100;
+          }
           percentages.push(percent);
         }
 
@@ -136,7 +152,6 @@ function DOMtoString(document_root) {
     });
 
 
-
     console.log(percentages);
     console.log(iframe2Document);
 
@@ -147,6 +162,7 @@ function DOMtoString(document_root) {
       chartType = 'bar';
     }
     console.log(chartType);
+
     chrome.runtime.sendMessage({content: percentages, type: "data"});
     chrome.runtime.sendMessage({content: dates, type: "label"});
 

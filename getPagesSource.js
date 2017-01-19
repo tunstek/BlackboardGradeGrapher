@@ -102,7 +102,15 @@ function DOMtoString(document_root) {
       if(status == "Graded") {
 
         //Only take results that have been graded
-        labels[index] = gradeTitle;
+
+        //Truncate a long assignment title
+        var label = gradeTitle.substr(0, 11);
+        if(label == gradeTitle) {
+          labels[index] = label;
+        }
+        else {
+          labels[index] = label + "..";
+        }
 
 
         var date = $(this).find('.lastActivityDate').text();

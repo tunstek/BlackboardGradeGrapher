@@ -199,4 +199,4 @@ $('#lineChartIt').click(function do_something(){
 
 $('#change_Labels').click(function change_Labels(){
   lineChart.scale.xLabels = labsLabel;
-}
+});

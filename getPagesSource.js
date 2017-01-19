@@ -61,11 +61,12 @@ function DOMtoString(document_root) {
       var ovGradeFl = parseFloat(ovGradeStr);
       var ovOutOfFl = parseFloat(ovOutOfStr);
       var ovPercent = (ovGradeFl/ovOutOfFl) * 100;
+      var ovPercentR =  Math.round(ovPercent * 100) / 100; //Limit to 2 decimal places
 
-      console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + ovPercent + "%");
+      console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + ovPercentR + "%");
 
       //Add the total percentage to the title
-      title = title + " Overall:" + ovPercent + "%";
+      title = title + " Overall:" + ovPercentR + "%";
     }
     else {
       console.log("Total not present.");

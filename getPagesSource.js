@@ -35,7 +35,8 @@ function DOMtoString(document_root) {
     var elements = $(iframe2Document);
 
     var header = $('#streamDetailHeaderRight', elements);
-    var title = header.find('.context');
+    var title = header.find('.context').text();
+    //console.log(title.text());
 
     var gradesWrapper = $('#grades_wrapper', elements);
 
@@ -67,7 +68,7 @@ function DOMtoString(document_root) {
       console.log("Total not present.");
     }
 
-    var subject = "Subject";
+    var subject = title;
     var labels = [];
     var percentages = [];
     var index = 0;

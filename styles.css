@@ -18,6 +18,10 @@ a:hover {
 .button:disabled {
   color: #e7e7e7;
 }
+.button:disabled:hover {
+  color: #e7e7e7;
+  background-color: white;
+}
 .button:hover {
   background-color: #e7e7e7;
 }

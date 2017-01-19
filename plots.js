@@ -2,19 +2,19 @@ var thisData = null;
 var thisLabels = null;
 var thisSubject = null;
 var canvasCreated = false;
+
+var thisLabsLabel = null;
+
 var CHART;
 var lineChart;
 var chartType = null;
 var thisChartType;
-var dataVals, dataArr,labelVals, labelArr ,subjVals, subject;
+var dataVals, dataArr,labelVals, labelArr ,subjVals, subject, labsVal;
+var toggleLabel = 0;
 
 Chart.defaults.scale.ticks.beginAtZero = true;
 Chart.defaults.scale.ticks.max = 100;
 Chart.defaults.global.animation.duration = 2000;
-
-
-
-
 
 
 function graphThis(type){
@@ -84,7 +84,6 @@ function graphThis(type){
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 
 
-
   if(message.type == "data") {
       console.log("First message: ", message.content);
       thisData = message;
@@ -105,11 +104,16 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
         console.log(message);
       }
 
+      if(message.type == "labsLabel"){
+        thisLabsLabel = message;
+
+      }
 
 
 
 
-if(thisData != null & thisLabels != null & thisSubject !=null & thisChartType !=null){
+
+if(thisData != null & thisLabels != null & thisSubject !=null & thisChartType !=null & thisLabsLabel!=null){
 
 console.log(thisData);
 
@@ -142,8 +146,9 @@ console.log(labelArr);
 var chartTypeVals = Object.values(thisChartType);
 chartType = chartTypeVals[0];
 
-
-
+var labsObject = Object.values(thisLabsLabel);
+labsVal = labsObject[0];
+console.log('labs in plot.js' + labsVal);
 
  graphThis(chartType);
 
@@ -152,6 +157,7 @@ thisData = null;
 thisLabels= null;
 thisSubject = null;
 thisChartType = null;
+thisLabsLabel = null;
 console.log("graphed!");
 }
 
@@ -184,7 +190,7 @@ $('#barChartIt').click(function do_something(){
 
 
 $('#lineChartIt').click(function do_something(){
-
+  console.log("line it");
   lineChart.destroy();
   CHART = document.getElementById("lineChart");
   document.getElementById("lineChartIt").disabled = true;
@@ -198,5 +204,27 @@ $('#lineChartIt').click(function do_something(){
 });
 
 $('#change_Labels').click(function change_Labels(){
-  lineChart.scale.xLabels = labsLabel;
-}
+  console.log(toggleLabel);
+  if(toggleLabel ==0 ){
+    lineChart.config.data.labels = labsVal;
+    toggleLabel = 1;
+  }
+  else{
+    lineChart.config.data.labels = labelArr;
+    toggleLabel = 0;
+  }
+
+  //
+  // var elem = document.getElementById("change_Labels");
+  //
+  // if(elem.value == "change to assignment") {
+  //   lineChart.config.data.labels = labels;
+  //   elem.value = " change to date";
+  // }
+  // else{
+  //   lineChart.config.data.labels = labsVal;
+  //   elem.value = "change to assignment";
+  // }
+
+  lineChart.update()
+});

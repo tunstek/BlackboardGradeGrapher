@@ -149,6 +149,9 @@ function DOMtoString(document_root) {
     console.log(chartType);
     chrome.runtime.sendMessage({content: percentages, type: "data"});
     chrome.runtime.sendMessage({content: dates, type: "label"});
+
+    chrome.runtime.sendMessage({content: labels, type: "labsLabel"});
+
     chrome.runtime.sendMessage({content: subject, type: "subject"});
     chrome.runtime.sendMessage({content: chartType, type: "chartType"})
 

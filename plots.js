@@ -7,9 +7,14 @@ var lineChart;
 var chartType = null;
 var thisChartType;
 var dataVals, dataArr,labelVals, labelArr ,subjVals, subject;
+
 Chart.defaults.scale.ticks.beginAtZero = true;
 Chart.defaults.scale.ticks.max = 100;
 Chart.defaults.global.animation.duration = 2000;
+
+
+
+
 
 
 function graphThis(type){
@@ -59,10 +64,8 @@ function graphThis(type){
           onComplete : function(){
 
             var url_base64 = document.getElementById("lineChart").toDataURL("image/png");
-            var url_base64jp = document.getElementById("lineChart").toDataURL("image/jpg");
 
             link1.href = url_base64;
-            link2.href=url_base64jp
 
             var url = link1.href.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 
@@ -156,12 +159,6 @@ console.log("graphed!");
 
 
 
-//function change() // no ';' here
-//{
-//    var elem = document.getElementById("myButton1");
-//    if (elem.value=="Close Curtain") elem.value = "Open Curtain";
-//    else elem.value = "Close Curtain";
-//}
 
 
 $('#barChartIt').click(function do_something(){
@@ -199,3 +196,7 @@ $('#lineChartIt').click(function do_something(){
 
 
 });
+
+$('#change_Labels').click(function change_Labels(){
+  lineChart.scale.xLabels = labsLabel;
+}

@@ -138,7 +138,6 @@ function DOMtoString(document_root) {
 
 
     console.log(percentages);
-
     console.log(iframe2Document);
 
 
@@ -152,8 +151,6 @@ function DOMtoString(document_root) {
     chrome.runtime.sendMessage({content: dates, type: "label"});
     chrome.runtime.sendMessage({content: subject, type: "subject"});
     chrome.runtime.sendMessage({content: chartType, type: "chartType"})
-
-
 
 
 }

@@ -65,7 +65,7 @@ function DOMtoString(document_root) {
       console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + ovPercent + "%");
 
       //Add the total percentage to the title
-      title = title + "\n Overall:" + ovPercent + "%";
+      title = title + " Overall:" + ovPercent + "%";
     }
     else {
       console.log("Total not present.");
@@ -123,6 +123,10 @@ function DOMtoString(document_root) {
         }
         else {
           console.log(grade + "/" + outOf + " = " + percent + "%");
+          //Check if % is > 100  --> Assignment may be worth extra marks
+          if(percent > 100) {
+            percent = 100;
+          }
           percentages.push(percent);
         }
 
@@ -137,7 +141,6 @@ function DOMtoString(document_root) {
 
 
     });
-
 
 
     console.log(percentages);

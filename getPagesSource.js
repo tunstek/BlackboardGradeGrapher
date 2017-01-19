@@ -63,6 +63,9 @@ function DOMtoString(document_root) {
       var ovPercent = (ovGradeFl/ovOutOfFl) * 100;
 
       console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + ovPercent + "%");
+
+      //Add the total percentage to the title
+      title = title + "\n Overall:" + ovPercent + "%";
     }
     else {
       console.log("Total not present.");
@@ -147,6 +150,7 @@ function DOMtoString(document_root) {
       chartType = 'bar';
     }
     console.log(chartType);
+
     chrome.runtime.sendMessage({content: percentages, type: "data"});
     chrome.runtime.sendMessage({content: dates, type: "label"});
 

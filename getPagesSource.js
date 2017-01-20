@@ -66,7 +66,7 @@ function DOMtoString(document_root) {
       console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + ovPercentR + "%");
 
       //Add the total percentage to the title
-      title = title + " Overall:" + ovPercentR + "%";
+    //  title = title + " Overall:" + ovPercentR + "%";
     }
     else {
       console.log("Total not present.");
@@ -136,6 +136,7 @@ function DOMtoString(document_root) {
           if(percent > 100) {
             percent = 100;
           }
+          percent = percent.toFixed(0);
           percentages.push(percent);
         }
 
@@ -151,7 +152,8 @@ function DOMtoString(document_root) {
 
     });
 
-
+    labels.reverse();
+    dates.reverse();
     console.log(percentages);
     console.log(iframe2Document);
 

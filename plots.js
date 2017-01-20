@@ -73,7 +73,7 @@ function graphThis(type){
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Percentage%'
+            labelString: '%'
           }
         }]
       },

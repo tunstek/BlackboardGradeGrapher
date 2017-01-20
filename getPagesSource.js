@@ -81,10 +81,8 @@ function DOMtoString(document_root) {
     }
 
     var subject = title;
-    var labels = [];
-    var percentages = [];
     var index = 0;
-    var dates = [];
+    var objs = [];
     //Loop through each singular result
     $(gradesWrapper.find('.sortable_item_row.graded_item_row.row.expanded')).each(function() {
       //console.log("index:" + $(this).attr("rowindex"));
@@ -108,16 +106,12 @@ function DOMtoString(document_root) {
       //get the status of the current grade
       var status = $(this).find('span.activityType').text();
       if(status == "Graded") {
-
         //Only take results that have been graded
 
         //Truncate a long assignment title
         var label = gradeTitle.substr(0, 11);
-        if(label == gradeTitle) {
-          labels[index] = label;
-        }
-        else {
-          labels[index] = label + "..";
+        if(label != gradeTitle) {
+          label  = label + "..";
         }
 
 
@@ -130,6 +124,11 @@ function DOMtoString(document_root) {
         var outOfStr = $(outOf).text();
         var outOf = parseFloat(outOfStr.substr(1)); //remove '/'
         var percent = (grade/outOf) * 100;
+        //Check if % is > 100  --> Assignment may be worth extra marks
+        if(percent > 100) {
+          percent = 100;
+        }
+        percent = percent.toFixed(0);
 
         //Check for any errors
         if(isNaN(grade)) {
@@ -140,16 +139,13 @@ function DOMtoString(document_root) {
         }
         else {
           console.log(grade + "/" + outOf + " = " + percent + "%");
-          //Check if % is > 100  --> Assignment may be worth extra marks
-          if(percent > 100) {
-            percent = 100;
-          }
-          percent = percent.toFixed(0);
-          percentages.push(percent);
         }
 
         console.log("Graded on: " + dateStr);
-        dates[index] = dateStr;
+
+        var gradeObj = {date:dateStr, percentage:percent, label:label};
+        objs[index] = gradeObj;
+
         index++;
       }
       else {
@@ -160,22 +156,35 @@ function DOMtoString(document_root) {
 
     });
 
-    labels.reverse();
-    dates.reverse();
-    console.log(percentages);
+    //Sort the percentages, labels and dates arrays by date
+    objs.sort(function(a, b) {
+      return Date.parse(a.date) - Date.parse(b.date);
+    });
+
+    //console.log(objs);
+
     console.log(iframe2Document);
 
 
+    //Create each array from the objs array
+    var dates = objs.map(function(a) {return a.date;});
+    var percentages = objs.map(function(a) {return a.percentage;});
+    var labels = objs.map(function(a) {return a.label;});
+
+
     var chartType = 'line';
-    console.log(percentages.length);
+    //console.log(percentages.length);
     if(percentages.length == 1){
       chartType = 'bar';
     }
     console.log(chartType);
 
+    //console.log(dates);
+    //console.log(percentages);
+    //console.log(labels);
+
     chrome.runtime.sendMessage({content: percentages, type: "data"});
     chrome.runtime.sendMessage({content: dates, type: "label"});
-
     chrome.runtime.sendMessage({content: labels, type: "labsLabel"});
 
     chrome.runtime.sendMessage({content: subject, type: "subject"});

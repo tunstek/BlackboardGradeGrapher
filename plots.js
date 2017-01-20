@@ -15,13 +15,22 @@ var toggleLabel = 0;
 Chart.defaults.scale.ticks.beginAtZero = true;
 Chart.defaults.scale.ticks.max = 100;
 Chart.defaults.global.animation.duration = 2000;
+Chart.defaults.global.defaultFontColor = "#000";
+//Chart.defaults.global.maintainAspectRatio = false;
+//Chart.defaults.global.responsive = true;
+Chart.defaults.global.legend.position = 'bottom';
+
 
 
 function graphThis(type){
 
   lineChart = new Chart (CHART, {
+
     type: type,
     data: data = {
+      axisY: {
+    title: "percentage"
+  },
       labels: labelArr,
       datasets: [
           {
@@ -29,7 +38,6 @@ function graphThis(type){
               fill: true,
               lineTension: 0.1,
               backgroundColor: "rgba(75,192,192,0.4)",
-
               borderColor: "rgba(75,192,192,1)",
               borderCapStyle: 'butt',
               borderDash: [],
@@ -52,33 +60,62 @@ function graphThis(type){
   },
 
 
-
   options:{
 
-
+    scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Percentage%'
+          }
+        }]
+      },
     maintainAspectRatio: true,
 
     bezierCurve: false,
 
+//when animation is completed
       animation:{
           onComplete : function(){
+            var ctx = this.chart.ctx;
+            var chartInstance = this.chart;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "bottom";
+            ctx.fillStyle = "#000";
 
+             var x_offset=0;
+             var y_offset=10;
+            // if(chartType == 'bar'){
+            //   x_offset = 10;
+            //   y_offset = 5;
+            // }
+
+            //
+            // if(chartType == 'line'){
+            //   x_offset = 10;
+            //   y_offset = 10;
+            // }
+            ctx.textAlign = "center";
+//display percentage of each point on the graph
+            this.data.datasets.forEach(function (dataset, i) {
+                          var meta = chartInstance.controller.getDatasetMeta(i);
+                          meta.data.forEach(function (bar, index) {
+                              var data = dataset.data[index];
+                              ctx.fillText(data, bar._model.x + x_offset, bar._model.y +y_offset);
+                          });
+                      });
+
+//convert canvas object to a a png image
             var url_base64 = document.getElementById("lineChart").toDataURL("image/png");
-
             link1.href = url_base64;
-
             var url = link1.href.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 
           }
       }
 
-  //    multiTooltipTemplate: "<%= labelArr %> - <%= dataArr %>";
-
   }
 
   });
-
-
 
 
 }
@@ -86,7 +123,7 @@ function graphThis(type){
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 
-
+//extract the messages passed from getPageSource.JS
   if(message.type == "data") {
       console.log("First message: ", message.content);
       thisData = message;
@@ -113,27 +150,24 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
       }
 
 
-
-
-
+//check if all the necessary messages are passed to graph the grades.
 if(thisData != null & thisLabels != null & thisSubject !=null & thisChartType !=null & thisLabsLabel!=null){
 
-console.log(thisData);
 
+//check if canvas has been created already.
 if(canvasCreated == false){
 CHART = document.getElementById("lineChart");
 console.log(CHART);
 canvasCreated = true;
 }
-
+//if already created, have to clear the old one and draw a new graph on same canvas
 else {
 lineChart.destroy();
 CHART = document.getElementById("lineChart");
-
-
 }
 
 
+//get the values from the objects passed as a message from getPageSource.js
  dataVals = Object.values(thisData);
  dataArr =dataVals[0];
 console.log(dataArr);
@@ -143,7 +177,7 @@ labelVals = Object.values(thisLabels);
 console.log(labelArr);
 
 
- subjVals = Object.values(thisSubject);
+subjVals = Object.values(thisSubject);
  subject = subjVals[0];
 
 var chartTypeVals = Object.values(thisChartType);
@@ -151,11 +185,10 @@ chartType = chartTypeVals[0];
 
 var labsObject = Object.values(thisLabsLabel);
 labsVal = labsObject[0];
-console.log('labs in plot.js' + labsVal);
 
  graphThis(chartType);
 
-
+//make all the messages passed from getPageSource to null so they dont corrupt the next messages passed.
 thisData = null;
 thisLabels= null;
 thisSubject = null;
@@ -169,47 +202,35 @@ console.log("graphed!");
 
 
 
-
+//functionto change from line graph to a bar chart
 $('#barChartIt').click(function do_something(){
 
   lineChart.destroy();
   CHART = document.getElementById("lineChart");
-
-  //document.getElementById("barChartIt").style.visibility = 'hidden';
-
-
-
   document.getElementById("barChartIt").disabled = true;
-
-
-  //document.getElementById("lineChartIt").style.visibility = 'visible';
-
-
   graphThis('bar');
   document.getElementById("lineChartIt").disabled = false;
 
 });
 
 
-
+//function to change bar graph to line graph
 $('#lineChartIt').click(function do_something(){
   console.log("line it");
   lineChart.destroy();
   CHART = document.getElementById("lineChart");
   document.getElementById("lineChartIt").disabled = true;
-
-  //document.getElementById("lineChartIt").style.visibility = 'hidden';
-  //document.getElementById("barChartIt").style.visibility = 'visible';
   graphThis('line');
   document.getElementById("barChartIt").disabled= false;
 
-
 });
 
+
+
+//function to change y axis/label
 $('#change_Labels').click(function change_Labels(){
 
-
-  console.log(toggleLabel);
+  //check current state
   if(toggleLabel ==0 ){
     lineChart.config.data.labels = labsVal;
     toggleLabel = 1;
@@ -219,17 +240,6 @@ $('#change_Labels').click(function change_Labels(){
     toggleLabel = 0;
   }
 
-  //
-  // var elem = document.getElementById("change_Labels");
-  //
-  // if(elem.value == "change to assignment") {
-  //   lineChart.config.data.labels = labels;
-  //   elem.value = " change to date";
-  // }
-  // else{
-  //   lineChart.config.data.labels = labsVal;
-  //   elem.value = "change to assignment";
-  // }
 
   lineChart.update()
 

@@ -36,6 +36,14 @@ function DOMtoString(document_root) {
 
     var header = $('#streamDetailHeaderRight', elements);
     var title = header.find('.context').text();
+    //only take what in brackets
+    var ind1 = title.indexOf('(');
+    var ind2 = title.indexOf(')');
+    if(ind1 != -1 && ind2 != -1 && ind1 < ind2) {
+      //The title contains brackets
+      title = title.substr(ind1+1, ind2-ind1-1); //not including the brackets themselves
+    }
+
     //console.log(title.text());
 
     var gradesWrapper = $('#grades_wrapper', elements);

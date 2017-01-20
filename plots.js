@@ -26,6 +26,7 @@ function graphThis(type){
 
   lineChart = new Chart (CHART, {
 
+
     type: type,
     data: data = {
       axisY: {
@@ -57,10 +58,16 @@ function graphThis(type){
           }
       ]
 
+
   },
 
 
   options:{
+
+    tooltips : {
+        enabled: true,
+        tooltipTemplate: "<%if (labels){%><%=labels%>: <%}%><%= value %>"
+    },
 
     scales: {
         yAxes: [{
@@ -71,7 +78,6 @@ function graphThis(type){
         }]
       },
     maintainAspectRatio: true,
-
     bezierCurve: false,
 
 //when animation is completed

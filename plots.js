@@ -103,6 +103,7 @@ function graphThis(type){
             // }
             ctx.textAlign = "center";
 //display percentage of each point on the graph
+/*
             this.data.datasets.forEach(function (dataset, i) {
                           var meta = chartInstance.controller.getDatasetMeta(i);
                           meta.data.forEach(function (bar, index) {
@@ -110,6 +111,7 @@ function graphThis(type){
                               ctx.fillText(data, bar._model.x + x_offset, bar._model.y +y_offset);
                           });
                       });
+                      */
 
 //convert canvas object to a a png image
             var url_base64 = document.getElementById("lineChart").toDataURL("image/png");

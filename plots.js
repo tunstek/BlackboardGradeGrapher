@@ -32,7 +32,7 @@ function graphThis(type){
       axisY: {
     title: "percentage"
   },
-      labels: labelArr,
+      labels: labsVal,
       datasets: [
           {
               label: subject,
@@ -239,13 +239,13 @@ $('#lineChartIt').click(function do_something(){
 $('#change_Labels').click(function change_Labels(){
 
   //check current state
-  if(toggleLabel ==0 ){
+  if(toggleLabel ==1 ){
     lineChart.config.data.labels = labsVal;
-    toggleLabel = 1;
+    toggleLabel = 0;
   }
   else{
     lineChart.config.data.labels = labelArr;
-    toggleLabel = 0;
+    toggleLabel = 1;
   }
 
 

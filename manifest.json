@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "TCD Blackboard Grade Grapher",
+  "name": "Blackboard Grade Grapher",
   "version": "1.0",
 
   "description": "Get a graph of your results in the 'My Grades' secton. (TCD ONLY)",

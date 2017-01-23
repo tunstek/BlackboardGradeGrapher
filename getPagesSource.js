@@ -1,4 +1,7 @@
-
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE', which is part of this source code package.
+ */
 
 function DOMtoString(document_root) {
     var html = '',
@@ -178,10 +181,6 @@ function DOMtoString(document_root) {
       chartType = 'bar';
     }
     console.log(chartType);
-
-    //console.log(dates);
-    //console.log(percentages);
-    //console.log(labels);
 
     chrome.runtime.sendMessage({content: percentages, type: "data"});
     chrome.runtime.sendMessage({content: dates, type: "label"});

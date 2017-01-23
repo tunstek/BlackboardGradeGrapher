@@ -1,3 +1,8 @@
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE', which is part of this source code package.
+ */
+
 var thisData = null;
 var thisLabels = null;
 var thisSubject = null;
@@ -102,16 +107,6 @@ function graphThis(type){
             //   y_offset = 10;
             // }
             ctx.textAlign = "center";
-//display percentage of each point on the graph
-/*
-            this.data.datasets.forEach(function (dataset, i) {
-                          var meta = chartInstance.controller.getDatasetMeta(i);
-                          meta.data.forEach(function (bar, index) {
-                              var data = dataset.data[index];
-                              ctx.fillText(data, bar._model.x + x_offset, bar._model.y +y_offset);
-                          });
-                      });
-                      */
 
 //convert canvas object to a a png image
             var url_base64 = document.getElementById("lineChart").toDataURL("image/png");

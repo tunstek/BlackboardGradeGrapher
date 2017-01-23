@@ -11,6 +11,10 @@
     "default_popup": "popup.html"
   },
 
+  "icons": { "32": "icon.png",
+             "64": "icon64.png",
+             "128": "icon128.png" },
+
 
  "web_accessible_resources": [
       "style.css"

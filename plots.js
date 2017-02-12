@@ -14,7 +14,8 @@ var CHART;
 var lineChart;
 var chartType = null;
 var thisChartType;
-var dataVals, dataArr,labelVals, labelArr ,subjVals, subject, labsVal;
+var dataVals, dataArr,labelVals, labelArr ,subjVals, subject, labsVal, oPercent;
+var thisOverallPercentage;
 var toggleLabel = 0;
 
 Chart.defaults.scale.ticks.beginAtZero = true;
@@ -24,6 +25,7 @@ Chart.defaults.global.defaultFontColor = "#000";
 //Chart.defaults.global.maintainAspectRatio = false;
 //Chart.defaults.global.responsive = true;
 Chart.defaults.global.legend.position = 'bottom';
+
 
 
 
@@ -130,75 +132,88 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
   if(message.type == "data") {
       console.log("First message: ", message.content);
       thisData = message;
+  }
+
+  if(message.type == "label") {
+      console.log("Second message: ", message.content);
+      thisLabels = message;
+  }
+
+  if(message.type == "subject") {
+      console.log("third message: ", message.content);
+      thisSubject = message;
     }
 
-    if(message.type == "label") {
-        console.log("Second message: ", message.content);
-        thisLabels = message;
-      }
+  if(message.type== "chartType"){
+    thisChartType = message;
+    console.log(message);
+  }
 
-      if(message.type == "subject") {
-          console.log("third message: ", message.content);
-          thisSubject = message;
-        }
+  if(message.type == "labsLabel"){
+    thisLabsLabel = message;
+  }
 
-      if(message.type== "chartType"){
-        thisChartType = message;
-        console.log(message);
-      }
-
-      if(message.type == "labsLabel"){
-        thisLabsLabel = message;
-
-      }
+  if(message.type == "overallPercentage"){
+    thisOverallPercentage = message;
+    //console.log("OV per message:")
+    //console.log(message)
+  }
 
 
-//check if all the necessary messages are passed to graph the grades.
-if(thisData != null & thisLabels != null & thisSubject !=null & thisChartType !=null & thisLabsLabel!=null){
+  //check if all the necessary messages are passed to graph the grades.
+  if(thisData != null & thisLabels != null & thisSubject !=null & thisChartType !=null & thisLabsLabel!=null){
+
+    //check if canvas has been created already.
+    if(canvasCreated == false){
+      CHART = document.getElementById("lineChart");
+      console.log(CHART);
+      canvasCreated = true;
+    }
+    //if already created, have to clear the old one and draw a new graph on same canvas
+    else {
+      lineChart.destroy();
+      CHART = document.getElementById("lineChart");
+    }
 
 
-//check if canvas has been created already.
-if(canvasCreated == false){
-CHART = document.getElementById("lineChart");
-console.log(CHART);
-canvasCreated = true;
-}
-//if already created, have to clear the old one and draw a new graph on same canvas
-else {
-lineChart.destroy();
-CHART = document.getElementById("lineChart");
-}
+    //get the values from the objects passed as a message from getPageSource.js
+
+    //thisOverallPercentage can be null sometimes (This is not an error state)
+    if(thisOverallPercentage != null) {
+      oPercent = Object.values(thisOverallPercentage);
+      $('#overall_div').text("Overall: " + oPercent[0] + "%");
+      console.log(oPercent)
+    }
+
+    dataVals = Object.values(thisData);
+    dataArr =dataVals[0];
+    console.log(dataArr);
+
+    labelVals = Object.values(thisLabels);
+    labelArr = labelVals[0];
+    console.log(labelArr);
 
 
-//get the values from the objects passed as a message from getPageSource.js
- dataVals = Object.values(thisData);
- dataArr =dataVals[0];
-console.log(dataArr);
+    subjVals = Object.values(thisSubject);
+    subject = subjVals[0];
 
-labelVals = Object.values(thisLabels);
- labelArr = labelVals[0];
-console.log(labelArr);
+    var chartTypeVals = Object.values(thisChartType);
+    chartType = chartTypeVals[0];
 
+    var labsObject = Object.values(thisLabsLabel);
+    labsVal = labsObject[0];
 
-subjVals = Object.values(thisSubject);
- subject = subjVals[0];
+    graphThis(chartType);
 
-var chartTypeVals = Object.values(thisChartType);
-chartType = chartTypeVals[0];
-
-var labsObject = Object.values(thisLabsLabel);
-labsVal = labsObject[0];
-
- graphThis(chartType);
-
-//make all the messages passed from getPageSource to null so they dont corrupt the next messages passed.
-thisData = null;
-thisLabels= null;
-thisSubject = null;
-thisChartType = null;
-thisLabsLabel = null;
-console.log("graphed!");
-}
+    //make all the messages passed from getPageSource to null so they dont corrupt the next messages passed.
+    thisData = null;
+    thisLabels= null;
+    thisSubject = null;
+    thisChartType = null;
+    thisLabsLabel = null;
+    thisOverallPercentage = null;
+    console.log("graphed!");
+  }
 
 });
 

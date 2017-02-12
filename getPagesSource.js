@@ -61,6 +61,7 @@ function DOMtoString(document_root) {
     }
 
     //Get the overall grade (This will be displayed alongside the graph)
+    var overallPercentage;
     if(totalIsPresent) {
       var overallGrade = gradesWrapper.find("div[rowindex=2]");
       var ovGrade = overallGrade.find('.grade[tabindex=0]');
@@ -72,9 +73,9 @@ function DOMtoString(document_root) {
       var ovGradeFl = parseFloat(ovGradeStr);
       var ovOutOfFl = parseFloat(ovOutOfStr);
       var ovPercent = (ovGradeFl/ovOutOfFl) * 100;
-      var ovPercentR =  Math.round(ovPercent * 100) / 100; //Limit to 2 decimal places
+      overallPercentage =  Math.round(ovPercent * 100) / 100; //Limit to 2 decimal places
 
-      console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + ovPercentR + "%");
+      console.log("Overall: " + ovGradeFl + "/" + ovOutOfFl + " =" + overallPercentage + "%");
 
       //Add the total percentage to the title
     //  title = title + " Overall:" + ovPercentR + "%";
@@ -174,6 +175,15 @@ function DOMtoString(document_root) {
     var percentages = objs.map(function(a) {return a.percentage;});
     var labels = objs.map(function(a) {return a.label;});
 
+    if(!totalIsPresent) {
+      //If the total is not present we can calculate overall percentage instead
+      var temp = 0;
+      for(var i in percentages) { temp += parseFloat(percentages[i]); }
+      overallPercentage = temp / percentages.length
+      //Round to 2 decimal places
+      overallPercentage = Math.round(overallPercentage * 100) / 100
+    }
+
 
     var chartType = 'line';
     //console.log(percentages.length);
@@ -182,12 +192,16 @@ function DOMtoString(document_root) {
     }
     console.log(chartType);
 
+    chrome.runtime.sendMessage({content: overallPercentage, type: "overallPercentage"});
+
     chrome.runtime.sendMessage({content: percentages, type: "data"});
     chrome.runtime.sendMessage({content: dates, type: "label"});
     chrome.runtime.sendMessage({content: labels, type: "labsLabel"});
 
     chrome.runtime.sendMessage({content: subject, type: "subject"});
     chrome.runtime.sendMessage({content: chartType, type: "chartType"})
+
+
 
 
 }

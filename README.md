@@ -1,4 +1,4 @@
-# [Blackboard Grade Grapher] (https://chrome.google.com/webstore/detail/blackboard-grade-grapher/phbjhhnngmfapkngpoadblamaddefdep)
+# [Blackboard Grade Grapher](https://chrome.google.com/webstore/detail/blackboard-grade-grapher/phbjhhnngmfapkngpoadblamaddefdep)
 
 
 An extension for Google Chrome to display a graph of your results in the "My Grades" section. This extension gives a graphical representation of your results throughout a module in the form of either a line graph or a bar chart. 

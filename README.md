@@ -1,6 +1,5 @@
-# BlackboardGradeGrapher
+# [Blackboard Grade Grapher] (https://chrome.google.com/webstore/detail/blackboard-grade-grapher/phbjhhnngmfapkngpoadblamaddefdep)
 
-CURRENTLY ONLY WORKS FOR TCD BLACKBOARD
 
 An extension for Google Chrome to display a graph of your results in the "My Grades" section. This extension gives a graphical representation of your results throughout a module in the form of either a line graph or a bar chart. 
 
@@ -9,8 +8,7 @@ An extension for Google Chrome to display a graph of your results in the "My Gra
 <img width="787" alt="screen shot 2017-07-16 at 18 59 07" src="https://user-images.githubusercontent.com/17296281/28250076-3ed5d3e8-6a59-11e7-9d15-3ea91283200b.png">
 
 
-
-
+CURRENTLY ONLY WORKS FOR TCD BLACKBOARD
 
 Known Issues:
 Toggled labels is not persistent across graph changes

@@ -4,8 +4,9 @@ CURRENTLY ONLY WORKS FOR TCD BLACKBOARD
 
 An extension for Google Chrome to display a graph of your results in the "My Grades" section. This extension gives a graphical representation of your results throughout a module in the form of either a line graph or a bar chart. 
 
-<img width="1163" alt="screen shot 2017-07-16 at 18 55 44" src="https://user-images.githubusercontent.com/17296281/28250037-9719da82-6a58-11e7-8ecc-b112d1e5eb9d.png">
-<img width="1162" alt="screen shot 2017-07-16 at 18 56 14" src="https://user-images.githubusercontent.com/17296281/28250038-974d183e-6a58-11e7-89bf-f7346f170d83.png">
+<img width="787" alt="screen shot 2017-07-16 at 18 59 07" src="https://user-images.githubusercontent.com/17296281/28250059-fc9578ee-6a58-11e7-9836-e97ea26de2c0.png">
+<img width="920" alt="screen shot 2017-07-16 at 18 58 48" src="https://user-images.githubusercontent.com/17296281/28250060-fc98532a-6a58-11e7-90a1-bd31ba919682.png">
+
 
 
 
